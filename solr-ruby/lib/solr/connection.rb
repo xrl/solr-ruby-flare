@@ -160,7 +160,12 @@ class Solr::Connection
                                 { "Content-Type" => request.content_type })
   
     case response
-    when Net::HTTPSuccess then response.body
+    when Net::HTTPSuccess then
+      body = response.body
+      if response.type_params && response.type_params["charset"]
+        body.force_encoding(response.type_params["charset"])
+      end
+      body
     else
       response.error!
     end
