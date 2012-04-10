@@ -34,10 +34,10 @@ SOLR_RUBY_VERSION = '0.0.8'
 require 'rubygems'
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'rake/packagetask'
-require 'rake/gempackagetask'
-require 'test/functional/test_solr_server'
+require 'rubygems/package_task'
+require_relative 'test/functional/test_solr_server'
 
 task :default => [:test_units]
 
@@ -66,7 +66,7 @@ spec = Gem::Specification.new do |s|
 end
 
 namespace :gem do
-  Rake::GemPackageTask.new(spec) do |pkg|
+  Gem::PackageTask.new(spec) do |pkg|
     pkg.need_zip = true
     pkg.need_tar = true
     pkg.package_dir = "pkg/gem"
